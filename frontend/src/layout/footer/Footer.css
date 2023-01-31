@@ -1,0 +1,60 @@
+.s-footer {
+    margin-top: 20px;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.s-footer .footer-top {
+    background: #fff !important;
+    padding: 15px;
+}
+
+.s-footer .columns {
+    flex-wrap: wrap !important;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    margin-top: -0.75rem;
+}
+
+.s-footer .columns .description {
+    font-size: 14px;
+    padding-right: 2em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.s-footer .columns:last-child {
+    margin-bottom: -0.75rem;
+}
+
+.s-footer .column {
+    flex: none;
+    width: 20%;
+}
+
+.s-footer .footer-box {
+    margin-bottom: 0.75rem;
+}
+
+.s-footer .footer-box .title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.s-footer .list-link {
+    list-style: none;
+    padding: 0;
+}
+
+.s-footer .list-link .link {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.s-footer .list-link .link a {
+    text-decoration: none;
+    color: inherit;
+}

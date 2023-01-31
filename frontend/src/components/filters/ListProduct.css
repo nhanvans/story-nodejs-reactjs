@@ -1,0 +1,36 @@
+.filter-sort__title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.filter-sort__title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.filter-sort__list-filter {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.block-product-list-filter {
+    padding-top: 10px;
+}
+
+.product-list-filter {
+    display: flex;
+    flex-wrap: wrap!important;
+}
+
+.block-product-list-filter .product-list-filter .product-item:not(:nth-of-type(5n)) {
+    margin-right: 10px;
+}
+
+.block-product-list-filter .product-list-filter .product-item {
+    width: calc(20% - 28px);
+    margin-bottom: 10px;
+    max-width: unset;
+}

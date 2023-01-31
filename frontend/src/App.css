@@ -1,0 +1,59 @@
+:root {
+  --s-header: 74px;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.is-flex {
+  display: flex !important;
+}
+
+@media (min-width: 343px) {
+  .container {
+    max-width: 343px;
+  }
+}
+
+
+@media (min-width: 640px) {
+
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 1000px) {
+
+  .container {
+    max-width: 1000px;
+  }
+}
+
+@media (min-width: 1160px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: block;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+  }
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  display: block;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+

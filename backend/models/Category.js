@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Category = new Schema(
   {
-    name: { type: String, maxLength: 225, required: true, unique: true },
+    name: { type: String, maxLength: 225, required: true, lowercase: true, trim: true, unique: true},
     stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
   },
   { timestamps: true }

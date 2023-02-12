@@ -43,8 +43,14 @@ module.exports = {
     },
 
     getAllStory: async (req, res) => {
+        //for pagination 
+        const page = parseInt(req.query.page)
         try {
-            const stories = await Story.find()
+            if ((!page || page === NaN) && page !== 0) {
+                const stories = await Story.find()
+                return res.status(200).json({ success: true, count: stories.length, message: "Successfully get all Story", data: stories })
+            }
+            const stories = await Story.find().skip(page * 3).limit(3)
             return res.status(200).json({ success: true, count: stories.length, message: "Successfully get all Story", data: stories })
         } catch (error) {
             return res.status(500).json({ success: false, message: "Fail get all Story", errors: error })
@@ -58,6 +64,34 @@ module.exports = {
             return res.status(200).json({ success: true, message: "Successfully delete Story", data: story })
         } catch (error) {
             return res.status(500).json({ success: false, message: "Fail delete Story", errors: error })
+        }
+    },
+
+    getStoryBySearch: async (req, res) => {
+        const { name, author, category } = req.query
+        try {
+            const stories = await Story.find({ author: author })
+            return res.status(200).json({ success: true, count: stories.length, message: "Successfully search stories", data: stories })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: "Fail search stories", errors: error })
+        }
+    },
+
+    getFeaturedStory: async (req, res) => {
+        try {
+            const stories = await Story.find({ featured: true })
+            return res.status(200).json({ success: true, count: stories.length, message: "Successfully featured stories", data: stories })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: "Fail featured stories", errors: error })
+        }
+    },
+
+    getStoryCount: async (req, res) => {
+        try {
+            const storyCount = await Story.estimatedDocumentCount()
+            return res.status(200).json({ success: true, message: "Successfully count stories", data: storyCount })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: "Fail count stories", errors: error })
         }
     },
 } 

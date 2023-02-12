@@ -11,7 +11,8 @@ const Story = new Schema(
     source: { type: String, maxLength: 255},
     total_chapter: { type: Number, required: true},
     status: { type: String, default: 'Đang ra', required: true },
-    chapters: [{ type: Schema.Types.ObjectId, ref: 'Chapter' }]
+    chapters: [{ type: Schema.Types.ObjectId, ref: 'Chapter' }],
+    featured: { type: Boolean, default: false }
   },
   { timestamps: true }
 );

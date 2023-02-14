@@ -31,22 +31,36 @@ const menuSibar = [
     label: 'Dashboard'
   },
   {
-    path: SITE_MAP.HOME,
+    path: SITE_MAP.ADMIN.CATEGORY,
     icon: <NotificationOutlined />,
-    key: SITE_MAP.HOME,
-    label: 'Home'
+    key: SITE_MAP.ADMIN.CATEGORY,
+    label: 'Category'
+  },
+  {
+    path: SITE_MAP.ADMIN.STORY,
+    icon: <NotificationOutlined />,
+    key: SITE_MAP.ADMIN.STORY,
+    label: 'Story'
+  },
+  {
+    path: SITE_MAP.ADMIN.CHAPTER,
+    icon: <NotificationOutlined />,
+    key: SITE_MAP.ADMIN.CHAPTER,
+    label: 'Chapter'
   }
 ]
 
 const Siders = () => {
   const [collapsed, setCollapsed] = useState(false)
+  const [selectedKey, setSelectedKey] = useState('0')
 
   return (
     <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
       <Menu
         theme='light'
         mode='inline'
-        defaultSelectedKeys={['0']}
+        defaultSelectedKeys={[selectedKey]}
+        selectedKeys={[selectedKey]}
         defaultOpenKeys={['sub1']}
         style={{
           height: '100%',
@@ -55,22 +69,14 @@ const Siders = () => {
         // items={items2}
       >
         {menuSibar.map((menu, key) => (
-          <Menu.Item key={key} icon={menu.icon}>
-            <Link to={menu.path} key={key}>
+          <Menu.Item key={key} icon={menu.icon} onClick={() => setSelectedKey(String(key))}>
+            <Link to={menu.path} key={menu.key}>
               {menu.label}
             </Link>
           </Menu.Item>
         ))}
 
-        <Menu.Item
-          icon={<UserOutlined />}
-          key={'2'}
-          onClick={() => {
-            console.log('e me mi')
-
-            return
-          }}
-        >
+        <Menu.Item icon={<UserOutlined />} key={'2'}>
           Home
         </Menu.Item>
       </Menu>

@@ -54,6 +54,10 @@ const Siders = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [selectedKey, setSelectedKey] = useState('0')
 
+  const handleMenuItemClick = async (key: string) => {
+    await setSelectedKey(String(key))
+  }
+
   return (
     <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
       <Menu
@@ -69,7 +73,7 @@ const Siders = () => {
         // items={items2}
       >
         {menuSibar.map((menu, key) => (
-          <Menu.Item key={key} icon={menu.icon} onClick={() => setSelectedKey(String(key))}>
+          <Menu.Item key={key} icon={menu.icon} onClick={() => handleMenuItemClick(String(key))}>
             <Link to={menu.path} key={menu.key}>
               {menu.label}
             </Link>
@@ -77,7 +81,7 @@ const Siders = () => {
         ))}
 
         <Menu.Item icon={<UserOutlined />} key={'2'}>
-          Home
+          <Link to={'/'}>Home</Link>
         </Menu.Item>
       </Menu>
     </Sider>

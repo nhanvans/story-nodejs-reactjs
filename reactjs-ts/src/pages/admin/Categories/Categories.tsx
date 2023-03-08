@@ -1,7 +1,8 @@
 import React from 'react'
 import AdminLayout from '../../../layouts/AdminLayout'
-import { Button, Card, Form, Input, Space, Table } from 'antd'
+import { Button, Card, Form, Space, Table } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
+import InputGroup from '../../../components/InputGroup'
 
 // type Props = {}
 
@@ -29,16 +30,14 @@ const Categories = () => {
             }}
             requiredMark={'optional'}
           >
-            <Form.Item
+            <InputGroup
+              key={'Name'}
               label='Name'
-              required
-              tooltip={{
-                title: 'input name required',
-                icon: <InfoCircleOutlined />
-              }}
-            >
-              <Input placeholder='input name category' />
-            </Form.Item>
+              required={true}
+              placeholder='Input name category'
+              tooltipIcon={<InfoCircleOutlined />}
+              tooltipTitle='Input name required'
+            />
             <Form.Item>
               <Button type='primary'>Save</Button>
             </Form.Item>

@@ -1,25 +1,43 @@
 import React from 'react'
-import { Col, Layout, Menu, Row } from 'antd'
+import { Col, Layout, Menu, Row, Button } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 const { Header } = Layout
-import logoIcon from '../../assets/images/icon.png'
 
-// type Props = {
-//   s: string
-// }
+type Props = {
+  collapsed: boolean
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 const items1 = ['1', '2', '3', '4', '5'].map((key) => ({
   key,
   label: `nav ${key}`
 }))
 
-const Headers = () => {
+const Headers = (props: Props) => {
+  const { collapsed, setCollapsed } = props
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed)
+  }
   return (
-    <Header>
+    <Header
+      style={{
+        backgroundColor: 'white',
+        paddingInline: '0'
+      }}
+    >
       <Row gutter={[10, 0]}>
         <Col span={2}>
           {' '}
           <div className='logo-brand'>
-            <img src={logoIcon} alt='' />
+            <Button
+              type='primary'
+              onClick={toggleCollapsed}
+              style={{
+                marginLeft: 16
+              }}
+            >
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </Button>
           </div>
         </Col>
 
@@ -29,7 +47,7 @@ const Headers = () => {
               width: '100%',
               justifyContent: 'flex-end'
             }}
-            theme='dark'
+            theme='light'
             mode='horizontal'
             defaultSelectedKeys={['2']}
             items={items1}

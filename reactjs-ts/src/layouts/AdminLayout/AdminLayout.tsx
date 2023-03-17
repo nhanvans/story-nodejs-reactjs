@@ -4,18 +4,48 @@ import Footers from './Footers'
 import { Breadcrumb, Layout, Menu } from 'antd'
 import './AdminLayout.scss'
 import logoIcon from '../../assets/images/logo.main.png'
-import { Link } from 'react-router-dom'
-import { UserOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
 import { menuSibar } from '../../utils/constants/MenuSider'
+import type { MenuProps } from 'antd'
 const { Content, Sider } = Layout
 
 type Props = {
   children?: React.ReactNode
 }
 
+type MenuItem = Required<MenuProps>['items'][number]
+
+const getItem = (
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group'
+): MenuItem => {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type
+  }
+}
+
+const setItems = (menuSibar: object) => {
+  const menuItem: Array<MenuItem> = []
+  Object.values(menuSibar).forEach((element) => {
+    menuItem.push(getItem(element.label, element.key, element.icon))
+  })
+
+  return menuItem
+}
+
 const AdminLayout = ({ children }: Props) => {
   const [collapsed, setCollapsed] = useState(false)
-  const [selectedKey, setSelectedKey] = useState('0')
+  const [selectedKey, setSelectedKey] = useState('/')
+  const navigate = useNavigate()
+
+  console.log(selectedKey)
 
   return (
     <>
@@ -29,19 +59,15 @@ const AdminLayout = ({ children }: Props) => {
             mode='inline'
             defaultSelectedKeys={[selectedKey]}
             selectedKeys={[selectedKey]}
-            // items={items2}
+            onClick={(e) => {
+              setSelectedKey(e.key)
+              navigate(e.key)
+            }}
+            items={setItems(menuSibar)}
           >
-            {menuSibar.map((menu, key) => (
-              <Menu.Item key={key} icon={menu.icon} onClick={() => setSelectedKey(String(key))}>
-                <Link to={menu.path} key={menu.key}>
-                  {menu.label}
-                </Link>
-              </Menu.Item>
-            ))}
-
-            <Menu.Item icon={<UserOutlined />} onClick={() => setSelectedKey(String(100))} key={'100'}>
+            {/* <Menu.Item icon={<UserOutlined />} onClick={() => setSelectedKey(String(100))} key={'100'}>
               <Link to={'/admin/dashboard'}>Home</Link>
-            </Menu.Item>
+            </Menu.Item> */}
           </Menu>
         </Sider>
         <Layout className='site-layout' style={{ background: '#e7e7e7e7' }}>

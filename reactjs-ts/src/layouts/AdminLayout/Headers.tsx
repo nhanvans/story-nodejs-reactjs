@@ -28,7 +28,7 @@ const Headers = (props: Props) => {
       <Row gutter={[10, 0]}>
         <Col span={2}>
           {' '}
-          <div className='logo-brand'>
+          <div className='buttonToggleCollapsed'>
             <Button
               type='primary'
               onClick={toggleCollapsed}

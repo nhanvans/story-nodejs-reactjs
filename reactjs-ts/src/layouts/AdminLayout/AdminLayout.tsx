@@ -1,51 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Headers from './Headers'
 import Footers from './Footers'
 import { Breadcrumb, Layout, Menu } from 'antd'
 import './AdminLayout.scss'
 import logoIcon from '../../assets/images/logo.main.png'
-import { useNavigate } from 'react-router-dom'
-import { menuSibar } from '../../utils/constants/MenuSider'
-import type { MenuProps } from 'antd'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { RootState } from '../../redux/store'
+import { updateCurrentMenuItem } from '../../redux/slices/menubar'
+import { useDispatch, useSelector } from 'react-redux'
 const { Content, Sider } = Layout
 
 type Props = {
   children?: React.ReactNode
 }
 
-type MenuItem = Required<MenuProps>['items'][number]
-
-const getItem = (
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group'
-): MenuItem => {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type
-  }
-}
-
-const setItems = (menuSibar: object) => {
-  const menuItem: Array<MenuItem> = []
-  Object.values(menuSibar).forEach((element) => {
-    menuItem.push(getItem(element.label, element.key, element.icon))
-  })
-
-  return menuItem
-}
-
 const AdminLayout = ({ children }: Props) => {
   const [collapsed, setCollapsed] = useState(false)
-  const [selectedKey, setSelectedKey] = useState('/')
+  const { menuItems, currentItem } = useSelector((state: RootState) => state.menubar)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
-  console.log(selectedKey)
+  useEffect(() => {
+    dispatch(updateCurrentMenuItem(location.pathname))
+  }, [location, dispatch])
+
+  const handleChangeTab = (value: string) => {
+    dispatch(updateCurrentMenuItem(String(value)))
+  }
+
+  const handleChangeNavigate = (value: string) => {
+    navigate(value)
+  }
 
   return (
     <>
@@ -57,13 +43,13 @@ const AdminLayout = ({ children }: Props) => {
           <Menu
             theme='dark'
             mode='inline'
-            defaultSelectedKeys={[selectedKey]}
-            selectedKeys={[selectedKey]}
+            defaultSelectedKeys={[String(currentItem)]}
+            selectedKeys={[String(currentItem)]}
             onClick={(e) => {
-              setSelectedKey(e.key)
-              navigate(e.key)
+              handleChangeTab(e.key)
+              handleChangeNavigate(e.key)
             }}
-            items={setItems(menuSibar)}
+            items={menuItems}
           >
             {/* <Menu.Item icon={<UserOutlined />} onClick={() => setSelectedKey(String(100))} key={'100'}>
               <Link to={'/admin/dashboard'}>Home</Link>

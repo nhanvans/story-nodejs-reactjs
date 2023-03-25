@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminLayout from '../../../layouts/AdminLayout'
-import { Button, Card, Form, Space, Table } from 'antd'
+import { Button, Card, Form, Popconfirm, Space, Table } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import InputGroup from '../../../components/InputGroup'
+import {
+  useGetCategoriesQuery,
+  useCreateCategoryMutation,
+  useDeleteCategoryMutation
+} from '../../../services/Category.service'
+import { Category, responseCategory } from '../../../types/category.type'
 
 // type Props = {}
 
@@ -12,6 +18,50 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 const Categories = () => {
   const [form] = Form.useForm()
+  const [name, setName] = useState('')
+  const [dataSource, setDataSource] = useState<Category[]>([])
+
+  const { data: resCate, isLoading, isFetching } = useGetCategoriesQuery()
+  const [createCategory] = useCreateCategoryMutation()
+  const [deleteCategory] = useDeleteCategoryMutation()
+
+  useEffect(() => {
+    setDataSource(getDataCategories(resCate || {}))
+    console.log('dataSourcecheck')
+  }, [resCate])
+
+  const getDataCategories = (resCate: responseCategory): Category[] => {
+    return (
+      resCate?.data?.map((item) => ({
+        ...item,
+        key: item._id
+      })) || []
+    )
+  }
+
+  const handlechangeNameInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value)
+  }
+
+  const handleSubmit = () => {
+    if (name) {
+      createCategory(name)
+      setName('')
+    }
+  }
+
+  const handleDeleteCategory = (category: Category) => {
+    if (category) {
+      const id = category._id
+      deleteCategory(id)
+      const newDataSource = dataSource.filter((item) => item._id !== id)
+      setDataSource(newDataSource)
+    }
+  }
+
+  const canSave = Boolean(name)
+  console.log(dataSource, isLoading, isFetching, canSave)
+
   return (
     <AdminLayout>
       <Space
@@ -29,6 +79,7 @@ const Categories = () => {
               requiredMarkValue: 'optional'
             }}
             requiredMark={'optional'}
+            onSubmitCapture={handleSubmit}
           >
             <InputGroup
               key={'Name'}
@@ -37,14 +88,22 @@ const Categories = () => {
               placeholder='Input name category'
               tooltipIcon={<InfoCircleOutlined />}
               tooltipTitle='Input name required'
+              handleChangeInput={handlechangeNameInput}
+              value={name}
             />
             <Form.Item>
-              <Button type='primary'>Save</Button>
+              <Button type='primary' onClick={handleSubmit} disabled={!canSave}>
+                Save
+              </Button>
             </Form.Item>
           </Form>
         </Card>
         <Table
           columns={[
+            {
+              title: 'key',
+              dataIndex: 'key'
+            },
             {
               title: 'Name',
               dataIndex: 'name',
@@ -52,38 +111,25 @@ const Categories = () => {
               sortDirections: ['ascend', 'descend']
             },
             {
-              title: 'Age',
-              dataIndex: 'age',
-              defaultSortOrder: 'descend',
-              sorter: (a, b) => a.age - b.age
+              title: 'createdAt',
+              dataIndex: 'createdAt'
+            },
+            {
+              title: 'updatedAt',
+              dataIndex: 'updatedAt'
+            },
+            {
+              title: 'operation',
+              dataIndex: 'operation',
+              render: (_, record: Category) =>
+                dataSource.length >= 1 ? (
+                  <Popconfirm title='Sure to delete?' onConfirm={() => handleDeleteCategory(record)}>
+                    <p>Delete</p>
+                  </Popconfirm>
+                ) : null
             }
           ]}
-          dataSource={[
-            {
-              key: '1',
-              name: 'John Brown',
-              age: 32,
-              address: 'New York No. 1 Lake Park'
-            },
-            {
-              key: '2',
-              name: 'Jim Green',
-              age: 42,
-              address: 'London No. 1 Lake Park'
-            },
-            {
-              key: '3',
-              name: 'Joe Black',
-              age: 32,
-              address: 'Sydney No. 1 Lake Park'
-            },
-            {
-              key: '4',
-              name: 'Jim Red',
-              age: 32,
-              address: 'London No. 2 Lake Park'
-            }
-          ]}
+          dataSource={dataSource}
           onChange={onChange}
         />
       </Space>

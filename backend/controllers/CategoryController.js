@@ -44,7 +44,7 @@ module.exports = {
 
     getAllCategory: async (req, res) => {
         try {
-            const categories = await Category.find()
+            const categories = await Category.find().sort({createdAt: 'desc'});
             return res.status(200).json({ success: true,count: categories.length, message: "Successfully get all category", data: categories })
         } catch (error) {
             return res.status(500).json({ success: false, message: "Fail get all category", errors: error })

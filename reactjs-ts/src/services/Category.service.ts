@@ -18,6 +18,14 @@ export const categoryApi = createApi({
         url: '/categories',
         method: 'POST',
         body: { name }
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'Access-Control-Allow-Origin': '*',
+        //   'Access-Control-Allow-Methods': 'GET, POST',
+        //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        //   'Access-Control-Allow-Credentials': true
+        // },
+        // withCredentials: true
       })
     }),
     deleteCategory: builder.mutation({

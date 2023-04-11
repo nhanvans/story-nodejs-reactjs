@@ -5,7 +5,7 @@ export const categoryApi = createApi({
   // The cache reducer expects to be added at `state.api` (already default - this is optional)
   reducerPath: 'categoryApi',
   // All of our requests will have URLs starting with '/fakeApi'
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/', mode: 'cors' }),
   // The "endpoints" represent operations and requests for this server
   endpoints: (builder) => ({
     // The `getCategories` endpoint is a "query" operation that returns data

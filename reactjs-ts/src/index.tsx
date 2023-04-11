@@ -7,16 +7,16 @@ import store from './redux/store'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <React.StrictMode>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#D84AF7' //2374E1
-          }
-        }}
-      >
-        <App />
-      </ConfigProvider>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#D84AF7' //2374E1
+        }
+      }}
+    >
+      <App />
+    </ConfigProvider>
+    {/* </React.StrictMode> */}
   </Provider>
 )

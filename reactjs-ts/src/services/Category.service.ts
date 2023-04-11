@@ -17,15 +17,16 @@ export const categoryApi = createApi({
       query: (name) => ({
         url: '/categories',
         method: 'POST',
-        body: { name }
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   'Access-Control-Allow-Origin': '*',
-        //   'Access-Control-Allow-Methods': 'GET, POST',
-        //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        //   'Access-Control-Allow-Credentials': true
-        // },
-        // withCredentials: true
+        body: { name },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Access-Control-Allow-Credentials': true,
+          'Access-Control-Max-Age': 600
+        },
+        withCredentials: true
       })
     }),
     deleteCategory: builder.mutation({

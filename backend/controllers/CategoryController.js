@@ -27,10 +27,11 @@ module.exports = {
         const category = new Category(req.body);
         try {
             const savedCategory = await category.save();
-            //   res.header("Access-Control-Allow-Origin", "*");
-            //   res.header("Access-Control-Allow-Methods", "GET, POST");
-            //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            //   res.header("Access-Control-Allow-Credentials", "true");
+              res.header("Access-Control-Allow-Origin", "*");
+              res.header("Access-Control-Allow-Methods", "GET, POST");
+              res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+              res.header("Access-Control-Allow-Credentials", "true");
+              res.header("Access-Control-Max-Age", 600);
             return res
                 .status(200)
                 .json({

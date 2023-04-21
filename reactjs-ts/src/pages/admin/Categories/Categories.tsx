@@ -21,7 +21,7 @@ const Categories = () => {
   const [name, setName] = useState('')
   const [dataSource, setDataSource] = useState<Category[]>([])
 
-  const { data: resCate, isLoading, isFetching } = useGetCategoriesQuery()
+  const { data: resCate, isLoading, isFetching, refetch } = useGetCategoriesQuery()
   const [createCategory] = useCreateCategoryMutation()
   const [deleteCategory] = useDeleteCategoryMutation()
 
@@ -47,6 +47,7 @@ const Categories = () => {
     if (name) {
       createCategory(name)
       setName('')
+      refetch()
     }
   }
 

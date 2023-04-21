@@ -6,12 +6,14 @@ export const categoryApi = createApi({
   reducerPath: 'categoryApi',
   // All of our requests will have URLs starting with '/fakeApi'
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/', mode: 'cors' }),
+  // tagTypes: ['Category'],
   // The "endpoints" represent operations and requests for this server
   endpoints: (builder) => ({
     // The `getCategories` endpoint is a "query" operation that returns data
     getCategories: builder.query<responseCategory, void>({
       // The URL for the request is '/api/categories'
       query: () => '/categories'
+      // providesTags: ['Category']
     }),
     createCategory: builder.mutation({
       query: (name) => ({
@@ -28,6 +30,7 @@ export const categoryApi = createApi({
         },
         withCredentials: true
       })
+      // invalidatesTags: ['Category']
     }),
     deleteCategory: builder.mutation({
       query: (id) => ({

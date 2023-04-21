@@ -18,7 +18,7 @@ var app = express();
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
-const allowlist = ['http://localhost:8001', 'http://localhost:8000']
+const allowlist = ['http://localhost:3000', 'http://localhost:8000']
 const corsOptionsDelegate = function (req, callback) {
   let corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
